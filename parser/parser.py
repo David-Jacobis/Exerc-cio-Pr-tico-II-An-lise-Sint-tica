@@ -89,7 +89,7 @@ class Parser():
       # [TODO]: Implementar a logica para as producoes do nao terminal E
       # ATGENCAO: Lembre-se de sinalizar o erro com o(s) simbolo(s) esperado(s) e o 
       # simbolo encontrado!
-      if (not (self.eat(Tag.ID) or self.eat(Tag.OP_ATRIB) or self.eat(Tag.SMB_PV))):
+      if (not (self.eat(Tag.ID) or self.eat(Tag.NUM))):
          self.T()
       self.ELinha()
 
@@ -101,7 +101,7 @@ class Parser():
       if(not(self.eat(Tag.OP_MAIOR) or self.eat(Tag.OP_MENOR) or self.eat(Tag.OP_MAIOR_IGUAL) or
          self.eat(Tag.OP_MENOR_IGUAL) or self.eat(Tag.OP_IGUAL) or self.eat(Tag.OP_DIFERENTE))):
          self.Op()
-      elif (not (self.eat(Tag.ID) or self.eat(Tag.OP_ATRIB) or self.eat(Tag.SMB_PV))):
+      elif(not (self.eat(Tag.ID) or self.eat(Tag.OP_ATRIB) or self.eat(Tag.SMB_PV))):
             self.T()
       else:
          return
