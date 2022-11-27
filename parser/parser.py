@@ -80,9 +80,8 @@ class Parser():
       # [TODO]: Implementar a logica para as producoes do nao terminal Atrib
       # ATGENCAO: Lembre-se de sinalizar o erro com o(s) simbolo(s) esperado(s) e o 
       # simbolo encontrado!
-      if(not(self.eat(Tag.ID) == self.T())):
-         self.sinalizaErroSintatico("Esperado \"id, terminal T\", encontrado " + "\"" + self.token.getLexema() + "\"")
-
+      if(not(self.eat(Tag.ID) or self.eat(Tag.OP_ATRIB) or self.eat(Tag.SMB_PV))):
+         self.T()
    
 
    # E -> T E'
@@ -90,24 +89,23 @@ class Parser():
       # [TODO]: Implementar a logica para as producoes do nao terminal E
       # ATGENCAO: Lembre-se de sinalizar o erro com o(s) simbolo(s) esperado(s) e o 
       # simbolo encontrado!
-      if(not(self.T())):
-         self.sinalizaErroSintatico("Esperado \"Não Terminal T'\", encontrado " + "\"" + self.token.getLexema() + "\"")
-         if(not(self.ELinha())):
-            self.sinalizaErroSintatico("Esperado \"Não Terminal E Linha'\", encontrado " + "\"" + self.token.getLexema() + "\"")
-
+      if (not (self.eat(Tag.ID) or self.eat(Tag.OP_ATRIB) or self.eat(Tag.SMB_PV))):
+         self.T()
+      self.ELinha()
 
 
    def ELinha(self):
       # [TODO]: Implementar a logica para as producoes do nao terminal E'
       # ATGENCAO: Lembre-se de sinalizar o erro com o(s) simbolo(s) esperado(s) e o 
       # simbolo encontrado!
-      if(not(self.Op())):
-         self.sinalizaErroSintatico("Esperado \"Operadores\", encontrado " + "\"" + self.token.getLexema() + "\"")
-         if(not(self.T())):
-            self.sinalizaErroSintatico("Esperado \"numero, id\", encontrado " + "\"" + self.token.getLexema() + "\"")
+      if(not(self.eat(Tag.OP_MAIOR) or self.eat(Tag.OP_MENOR) or self.eat(Tag.OP_MAIOR_IGUAL) or
+         self.eat(Tag.OP_MENOR_IGUAL) or self.eat(Tag.OP_IGUAL) or self.eat(Tag.OP_DIFERENTE))):
+         self.Op()
+      elif (not (self.eat(Tag.ID) or self.eat(Tag.OP_ATRIB) or self.eat(Tag.SMB_PV))):
+            self.T()
       else:
          return
-      
+
 
    # Op -> ">" | "<" | ">=" | "<=" | "==" | "!="
    def Op(self):
